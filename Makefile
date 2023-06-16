@@ -1,6 +1,6 @@
-OUTPUTDIR:=`pwd`/output
-ROOTFS=$(OUTPUTDIR)/rootfs.ext4
-FULLIMG=$(OUTPUTDIR)/full.img
+OUTPUTDIR := $(CURDIR)/output
+ROOTFS:=${OUTPUTDIR}/rootfs.ext4
+FULLIMG:=${OUTPUTDIR}/full.img
 
 IMAGES:=$(ROOTFS) $(FULLIMG)
 
@@ -12,10 +12,6 @@ clean:
 extra:
 	mkdir -- extra
 
-$(ROOTFS): extra
-	genimage --config image-root.cfg --output $(OUTPUTDIR)
-	ls -l $(ROOTFS)
-
-$(FULLIMG): $(ROOTFS)
-	OUTPUTDIR=$(OUTPUTDIR) genimage --config image-full.cfg --output $(OUTPUTDIR)
-	ls -l $(FULLIMG)
+$(IMAGES):
+	OUTPUTDIR=$(OUTPUTDIR) genimage --config image-one.cfg --output $(OUTPUTDIR)
+	ls -l $(ROOTFS) $(FULLIMG)
